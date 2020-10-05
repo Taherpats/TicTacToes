@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/splashScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,10 +11,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tic Tac Toe',
       theme: ThemeData(
+        fontFamily: 'Game',
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
     );
   }
 }
@@ -34,76 +37,79 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[800],
-      body: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Player X',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                        SizedBox(height: 12),
-                        Text(
-                          XScore.toString(),
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        )
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Player O',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                        SizedBox(height: 12),
-                        Text(
-                          OScore.toString(),
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        )
-                      ],
-                    ),
-                  ],
+      backgroundColor: Colors.grey[900],
+      body: Container(
+        padding: EdgeInsets.symmetric(vertical: 32),
+        child: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Player X',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                          SizedBox(height: 12),
+                          Text(
+                            XScore.toString(),
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          )
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Player O',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                          SizedBox(height: 12),
+                          Text(
+                            OScore.toString(),
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 3,
-            child: GridView.builder(
-                itemCount: 9,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3),
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      _tapped(index);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey[700])),
-                      child: Center(
-                        child: Text(
-                          displayValue[index],
-                          style: TextStyle(color: Colors.white, fontSize: 38),
+            Expanded(
+              flex: 3,
+              child: GridView.builder(
+                  itemCount: 9,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3),
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        _tapped(index);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey[700])),
+                        child: Center(
+                          child: Text(
+                            displayValue[index],
+                            style: TextStyle(color: Colors.white, fontSize: 38),
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
-          ),
-          Expanded(
-            child: Container(),
-          ),
-        ],
+                    );
+                  }),
+            ),
+//            Container(
+//                child: Text("Taher Patrawala",
+//                    style: TextStyle(color: Colors.white, fontSize: 18))),
+          ],
+        ),
       ),
     );
   }
