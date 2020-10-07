@@ -1,7 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tic_tac_toe/main.dart';
 import 'package:tic_tac_toe/vsComputer.dart';
 import 'package:tic_tac_toe/vsPlayer.dart';
 
@@ -15,7 +14,7 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 140.0),
+                padding: const EdgeInsets.only(top: 140.0, left: 24, right: 24),
                 child: Container(
                   child: Text(
                     "TIC TAC TOE",
@@ -58,54 +57,39 @@ class SplashScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => VsComputer()),
-                      );
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 12),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30)),
-                      padding: EdgeInsets.all(30),
-                      child: Center(
-                        child: Text(
-                          'vs Computer',
-                          style: TextStyle(letterSpacing: 3),
-                        ),
-                      ),
-                    ),
-                  ),
+                  _gameSelectButton('vs Computer', true, context),
                   SizedBox(height: 18),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => VsPlayer()),
-                      );
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 12),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30)),
-                      padding: EdgeInsets.all(30),
-                      child: Center(
-                        child: Text(
-                          'vs Player',
-                          style: TextStyle(letterSpacing: 3),
-                        ),
-                      ),
-                    ),
-                  ),
+                  _gameSelectButton('vs Player', false, context),
                   SizedBox(height: 18),
                 ],
               ),
             ],
           ),
         ));
+  }
+
+  Widget _gameSelectButton(String name, bool vsComputer, context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          vsComputer
+              ? MaterialPageRoute(builder: (context) => VsComputer())
+              : MaterialPageRoute(builder: (context) => VsPlayer()),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 22),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(14)),
+        padding: EdgeInsets.all(30),
+        child: Center(
+          child: Text(
+            name,
+            style: TextStyle(letterSpacing: 3, fontSize: 16),
+          ),
+        ),
+      ),
+    );
   }
 }
