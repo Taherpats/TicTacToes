@@ -2,6 +2,8 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tic_tac_toe/main.dart';
+import 'package:tic_tac_toe/vsComputer.dart';
+import 'package:tic_tac_toe/vsPlayer.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -54,28 +56,53 @@ class SplashScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyHomePage()),
-                  );
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(left: 40, right: 40, bottom: 100),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30)),
-                    padding: EdgeInsets.all(30),
-                    child: Center(
-                      child: Text(
-                        'PLAY GAME',
-                        style: TextStyle(letterSpacing: 3),
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => VsComputer()),
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30)),
+                      padding: EdgeInsets.all(30),
+                      child: Center(
+                        child: Text(
+                          'vs Computer',
+                          style: TextStyle(letterSpacing: 3),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  SizedBox(height: 18),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => VsPlayer()),
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30)),
+                      padding: EdgeInsets.all(30),
+                      child: Center(
+                        child: Text(
+                          'vs Player',
+                          style: TextStyle(letterSpacing: 3),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 18),
+                ],
               ),
             ],
           ),
