@@ -2,14 +2,14 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tic_tac_toe/vsComputer.dart';
-import 'package:tic_tac_toe/vsPlayer.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[900],
-        body: Center(
+      backgroundColor: Colors.grey[900],
+      body: SafeArea(
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -65,7 +65,9 @@ class SplashScreen extends StatelessWidget {
               ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _gameSelectButton(String name, bool vsComputer, context) {
@@ -74,8 +76,10 @@ class SplashScreen extends StatelessWidget {
         Navigator.push(
           context,
           vsComputer
-              ? MaterialPageRoute(builder: (context) => VsComputer())
-              : MaterialPageRoute(builder: (context) => VsPlayer()),
+              ? MaterialPageRoute(
+                  builder: (context) => VsComputer(vsComputer: true))
+              : MaterialPageRoute(
+                  builder: (context) => VsComputer(vsComputer: false)),
         );
       },
       child: Container(

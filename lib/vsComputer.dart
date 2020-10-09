@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class VsComputer extends StatefulWidget {
+  final bool vsComputer;
+
+  const VsComputer({Key key, @required this.vsComputer}) : super(key: key);
+
   @override
   _VsComputerState createState() => _VsComputerState();
 }
@@ -11,8 +15,10 @@ class VsComputer extends StatefulWidget {
 class _VsComputerState extends State<VsComputer> {
   int oScore = 0, xScore = 0;
   int filledBoxes = 0;
-  List<String> displayValue = ['', '', '', '', '', '', '', '', ''];
+  int moves = 0;
+  List<String> board = ['', '', '', '', '', '', '', '', ''];
   String winner = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +90,7 @@ class _VsComputerState extends State<VsComputer> {
                                   border: Border.all(color: Colors.grey[700])),
                               child: Center(
                                 child: Text(
-                                  displayValue[index],
+                                  board[index],
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 38),
                                 ),
@@ -132,46 +138,54 @@ class _VsComputerState extends State<VsComputer> {
   }
 
   int _tapped(int index) {
-    if (displayValue[index] == '') {
-      displayValue[index] = 'O';
+    if (board[index] == '') {
+      if (moves % 2 == 0) {
+        board[index] = 'O';
+        moves++;
+      } else {
+        board[index] = 'X';
+        moves++;
+      }
+
       setState(() {});
-      if (!isMovesLeft(displayValue)) {
+
+      if (!isMovesLeft(board)) {
         _showDrawDialog();
         return 0;
       }
-      _bestMove(displayValue);
+      if (widget.vsComputer) {
+        _bestMove(board);
+        moves++;
+      }
       if (_checkGame() != '') {
         _showWinDialog(_checkGame());
       }
       setState(() {});
     }
+
     return 0;
   }
 
   String _checkGame() {
     for (int i = 0; i < 9; i += 3) {
-      if (displayValue[i] != '' &&
-          displayValue[i] == displayValue[i + 1] &&
-          displayValue[i + 1] == displayValue[i + 2]) {
-        winner = displayValue[i];
+      if (board[i] != '' &&
+          board[i] == board[i + 1] &&
+          board[i + 1] == board[i + 2]) {
+        winner = board[i];
         return winner;
       }
     }
     for (int i = 0; i < 3; i++) {
-      if (displayValue[i] != '' &&
-          displayValue[i] == displayValue[i + 3] &&
-          displayValue[i + 3] == displayValue[i + 6]) {
-        winner = displayValue[i];
+      if (board[i] != '' &&
+          board[i] == board[i + 3] &&
+          board[i + 3] == board[i + 6]) {
+        winner = board[i];
         return winner;
       }
     }
-    if (displayValue[0] != '' &&
-            (displayValue[0] == displayValue[4] &&
-                displayValue[4] == displayValue[8]) ||
-        (displayValue[2] != '' &&
-            displayValue[2] == displayValue[4] &&
-            displayValue[4] == displayValue[6])) {
-      winner = displayValue[4];
+    if (board[0] != '' && (board[0] == board[4] && board[4] == board[8]) ||
+        (board[2] != '' && board[2] == board[4] && board[4] == board[6])) {
+      winner = board[4];
       return winner;
     }
     return '';
@@ -189,6 +203,8 @@ class _VsComputerState extends State<VsComputer> {
               child: Text("Play Again!", style: TextStyle(fontSize: 12)),
               onPressed: () {
                 _clearBoard();
+                moves = 0;
+                setState(() {});
                 Navigator.of(context).pop();
               },
             )
@@ -212,6 +228,8 @@ class _VsComputerState extends State<VsComputer> {
               child: Text("Play Again!", style: TextStyle(fontSize: 12)),
               onPressed: () {
                 _clearBoard();
+                moves = 0;
+                setState(() {});
                 Navigator.of(context).pop();
               },
             )
@@ -229,8 +247,9 @@ class _VsComputerState extends State<VsComputer> {
 
   void _clearBoard() {
     for (int i = 0; i < 9; i++) {
-      displayValue[i] = '';
+      board[i] = '';
     }
+    moves = 0;
     filledBoxes = 0;
     setState(() {});
   }
